@@ -2,11 +2,9 @@ package com.gy.love.loveapi.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gy.love.loveapi.entity.LoveActivity;
-import com.gy.love.loveapi.entity.LoveUser;
-import com.gy.love.loveapi.entity.LoveUserActivity;
-import com.gy.love.loveapi.entity.Page;
+import com.gy.love.loveapi.entity.*;
 import com.gy.love.loveapi.mapper.LoveActivityMapper;
+import com.gy.love.loveapi.mapper.LoveDetailMapper;
 import com.gy.love.loveapi.mapper.LoveUserActivityMapper;
 import com.gy.love.loveapi.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,9 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Autowired
     private LoveActivityMapper activityMapper;
+
+    @Autowired
+    private LoveDetailMapper detailMapper;
 
     @Autowired
     private LoveUserActivityMapper userActivityMapper;
@@ -57,6 +58,13 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     public LoveActivity findById(Integer id) {
-        return activityMapper.selectByPrimaryKey(id);
+
+        LoveActivity activity=activityMapper.selectByPrimaryKey(id);
+
+        List<LoveDetail> details=detailMapper.findByActivityId(id);
+
+        activity.setDetails(details);
+
+        return activity;
     }
 }

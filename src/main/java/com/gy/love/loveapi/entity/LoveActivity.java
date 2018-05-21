@@ -3,6 +3,7 @@ package com.gy.love.loveapi.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class LoveActivity {
     private Integer id;
@@ -15,6 +16,24 @@ public class LoveActivity {
     private Date date;
 
     private Boolean isNoticed;
+
+    private List<LoveDetail> details;
+
+    public Boolean getNoticed() {
+        return isNoticed;
+    }
+
+    public void setNoticed(Boolean noticed) {
+        isNoticed = noticed;
+    }
+
+    public List<LoveDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<LoveDetail> details) {
+        this.details = details;
+    }
 
     public Integer getId() {
         return id;
