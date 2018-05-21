@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
-
+/**
+ * @author Wuwemxin
+ * @Description: ${todo}
+ * @date 2018/5/22 0:40
+ */
 @RestController
 @RequestMapping("/course")
 @Api(value = "课程管理")
@@ -23,14 +27,14 @@ public class CourseController {
     private CourseService courseService;
 
     @ApiOperation(value = "课程添加")
-    @PostMapping
+    @PostMapping("/add")
     public SimpleResponse add(@RequestBody @Valid LoveCourse loveCourse) {
         courseService.add(loveCourse);
         return simpleResponse(200);
     }
 
-    @ApiOperation(value = "活动分页")
-    @GetMapping
+    @ApiOperation(value = "课程分页")
+    @GetMapping("/findByPage")
     public SimpleResponse findByPage(Page page) {
 
         PageInfo<LoveCourse> info = null;
@@ -46,7 +50,7 @@ public class CourseController {
     }
 
     @ApiOperation(value = "课程修改")
-    @GetMapping("/{id}")
+    @PostMapping("/updateCourseByCourseId")
     public SimpleResponse updateCourseBycourseId(@RequestBody @Valid LoveCourse loveCourse) {
 
         LoveCourse course = null;
@@ -65,13 +69,13 @@ public class CourseController {
     }
 
     @ApiOperation(value = "课程详细查找")
-    @GetMapping("/{activityId}/detail")
-    public SimpleResponse findDetailByCourseId(@PathVariable("courseId") Integer courseId) {
-
+    @GetMapping("/findDetailByCourseId")
+    public SimpleResponse findDetailByCourseId(Integer courseId) {
+System.out.print(courseId+"444");
         LoveCourse course = null;
 
         try {
-
+            course =courseService.findById(courseId);
 
         } catch (Exception e) {
             e.printStackTrace();

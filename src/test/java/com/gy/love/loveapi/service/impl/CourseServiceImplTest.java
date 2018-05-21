@@ -1,5 +1,9 @@
 package com.gy.love.loveapi.service.impl;
-
+/**
+ * @author Wuwemxin
+ * @Description: ${todo}
+ * @date 2018/5/22 0:40
+ */
 import com.gy.love.loveapi.LoveApiApplication;
 import com.gy.love.loveapi.entity.LoveCourse;
 import com.gy.love.loveapi.entity.Page;
