@@ -19,6 +19,11 @@
     from love_order
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findAllByPage" parameterType="Page" resultType="LoveOrder">
+    select <include refid="Base_Column_List"></include>
+    from love_order
+    where ${column} like concat('%',#{keyword},'%')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from love_order
     where id = #{id,jdbcType=INTEGER}

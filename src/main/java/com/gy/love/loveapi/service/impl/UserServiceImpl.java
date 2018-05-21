@@ -27,24 +27,20 @@ public class UserServiceImpl implements UserService {
     public LoveUser findByUserName(String userName) {
         return userMapper.findByUserName(userName);
     }
-
     @Override
     public void add(LoveUser u) {
         userMapper.insertSelective(u);
     }
-
     @Override
     public LoveUser findByName(String userName) {
         return null;
     }
-
     @Override
     public String parseToken(String token) {
         String auth = token.substring(7, token.toString().length());
         Claims claims = JwtUtils.parseJWT(auth, audienceEntity.getBase64Secret());
         return (String) claims.get("loginUser");
     }
-
     @Override
     public LoveUser findById(Integer id) throws Exception {
         return userMapper.selectByPrimaryKey(id);
