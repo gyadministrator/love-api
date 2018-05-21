@@ -9,6 +9,11 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author gaoyun
  * 2018/4/18 10:57
@@ -31,6 +36,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public void add(LoveUser u) {
         userMapper.insertSelective(u);
+    }
+
+    @Override
+    public List<LoveUser> findFamilyById(Integer id) {
+        List<LoveUser> family=new ArrayList<>();
+        family.addAll(userMapper.findByChildrenId(id));
+        family.addAll(userMapper.findByParentId(id));
+
+        List<LoveUser> temp=new ArrayList<>();
+        for (LoveUser loveUser : family) {
+            temp.addAll(userMapper.findByChildrenId(loveUser.getId()));
+            temp.addAll(userMapper.findByParentId(loveUser.getId()));
+        }
+
+        family.addAll(temp);
+
+        family.add(userMapper.selectByPrimaryKey(id));
+
+        return new ArrayList<>(new HashSet<>(family));
     }
 
     @Override

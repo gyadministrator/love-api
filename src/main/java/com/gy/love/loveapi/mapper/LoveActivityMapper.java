@@ -1,9 +1,12 @@
 package com.gy.love.loveapi.mapper;
 
 import com.gy.love.loveapi.entity.LoveActivity;
+import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.entity.Page;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface LoveActivityMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,4 +22,6 @@ public interface LoveActivityMapper {
     int updateByPrimaryKey(LoveActivity record);
 
     List<LoveActivity> findAllByPage(Page page);
+
+    List<LoveActivity> findByDate(Map<String ,Object> parameter);
 }

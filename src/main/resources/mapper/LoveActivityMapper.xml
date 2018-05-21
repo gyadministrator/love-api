@@ -11,6 +11,17 @@
   <sql id="Base_Column_List" >
     id, title, content, date, is_noticed
   </sql>
+  <sql id="Activity_Base_Column_List" >
+    a.id, a.title, a.content, a.date, a.is_noticed
+  </sql>
+  <select id="findByDate" parameterType="map" resultType="LoveActivity">
+    select <include refid="Activity_Base_Column_List"></include>
+    from love_activity a , love_user_activity ua
+    where date like concat(#{date},'%') and a.id=ua.activity_id and ua.user_id in
+    <foreach collection="users" item="user" index="index" open="(" close=")" separator=",">
+        #{user.id}
+    </foreach>
+  </select>
   <select id="findAllByPage" parameterType="Page" resultType="LoveActivity">
     select <include refid="Base_Column_List"></include>
     from love_activity

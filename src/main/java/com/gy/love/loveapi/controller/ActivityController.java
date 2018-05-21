@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.Date;
+import java.util.List;
+
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
 
 
@@ -47,8 +50,13 @@ public class ActivityController {
         return simpleResponse(200);
     }
 
-    @ApiOperation(value = "活动查找")
-    @GetMapping("/{id}")
+    /**
+     * 根据ID查找
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "活动查找ById")
+    @GetMapping("/id/{id}")
     public SimpleResponse findById(@PathVariable("id")Integer id){
 
         LoveActivity activity=null;
@@ -63,6 +71,36 @@ public class ActivityController {
         return simpleResponse(200,"",activity);
     }
 
+    /**
+     * 根据时间查找
+     * @param date  时间，精确到日即可，如：2018-05-20
+     * @param user 用户id
+     * @return
+     */
+    @ApiOperation(value = "活动查找ByDate")
+    @GetMapping("/date/{Date}")
+    public SimpleResponse findByDate(@PathVariable("Date")String date,@CurrentUser LoveUser user){
+
+        List<LoveActivity> activityList=null;
+
+        try {
+
+            List<LoveUser> family=userService.findFamilyById(user.getId());
+
+            activityList = activityService.findByDate(date,family);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return simpleResponse(200,"",activityList);
+    }
+
+    /**
+     * 分页查找
+     * @param page 分页，page：页面号，默认1；pageSize：页面大小，默认10；column：列，默认id；keyword：关键字，默认空
+     * @return
+     */
     @ApiOperation(value = "活动分页")
     @GetMapping
     public SimpleResponse findByPage(Page page){
@@ -78,27 +116,5 @@ public class ActivityController {
 
         return simpleResponse(200,"",info);
     }
-
-    /**
-     * 根据活动ID查找所有详细
-     * @param activityId   活动ID
-     * @return
-     */
-    @ApiOperation(value = "活动详细查找")
-    @GetMapping("/{activityId}/detail")
-    public SimpleResponse findDetailByActivityId(@PathVariable("activityId")Integer activityId){
-
-        LoveActivity activity=null;
-
-        try {
-            //activity = this.activityService.queryById(id);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return simpleResponse(200,"",activity);
-    }
-
 
 }
