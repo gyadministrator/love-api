@@ -10,7 +10,5 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @MapperScan("com.gy.love.loveapi.mapper")
 public class LoveApiApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(LoveApiApplication.class, args);
-    }
+    public static void main(String[] args) { SpringApplication.run(LoveApiApplication.class, args);}
 }
