@@ -1,7 +1,7 @@
 package com.gy.love.loveapi.controller;
 
 import com.gy.love.loveapi.config.Constants;
-import com.gy.love.loveapi.entity.User;
+import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.jwt.utils.AccessToken;
 import com.gy.love.loveapi.jwt.utils.Audience;
 import com.gy.love.loveapi.jwt.utils.JwtUtils;
@@ -13,10 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -34,24 +31,20 @@ import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleRes
 @Api(value = "用户管理")
 public class UserController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    private final Audience audienceEntity;
+    @Autowired
+    private Audience audienceEntity;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    public UserController(UserService userService, Audience audienceEntity) {
-        this.userService = userService;
-        this.audienceEntity = audienceEntity;
-    }
-
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
-    public SimpleResponse login(@RequestBody User user) {
+    public SimpleResponse login(@RequestBody LoveUser user) {
         logger.info("登录的用户为:" + user.toString());
         Map<String, Object> map = new HashMap<>();
-        User u = this.userService.findByName(user.getUserName());
+        LoveUser u = this.userService.findByUserName(user.getUserName());
         String accessToken = null;
         if (u != null) {
             map.put("user", u);
@@ -80,17 +73,35 @@ public class UserController {
 
     @ApiOperation(value = "添加用户")
     @PostMapping
-    public SimpleResponse addUser(@RequestBody @Valid User user) {
+    public SimpleResponse addUser(@RequestBody @Valid LoveUser user) {
         logger.info("添加用户---->" + user.toString());
-        User u = this.userService.findByName(user.getUserName());
+        LoveUser u = this.userService.findByName(user.getUserName());
         if (u == null) {
             assert false;
             String pwd = Md5Utils.MD5(user.getPassword());
             user.setPassword(pwd);
-            this.userService.saveReturnEntity(user);
+            userService.add(user);
             return simpleResponse(200);
         } else {
             return simpleResponse(500, "", "此用户名已经存在");
         }
+    }
+
+
+    @ApiOperation(value="通过ID查找")
+    @GetMapping("/{id}")
+    public SimpleResponse findById(@PathVariable("id")Integer id){
+
+        LoveUser user=new LoveUser();
+        try {
+            user=this.userService.findById(id);
+
+            System.out.println("--->"+user.getId());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return simpleResponse(200,"",user);
     }
 }

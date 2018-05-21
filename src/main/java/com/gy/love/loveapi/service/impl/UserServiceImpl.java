@@ -1,19 +1,13 @@
 package com.gy.love.loveapi.service.impl;
 
-import com.gy.love.loveapi.entity.User;
+import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.jwt.utils.Audience;
 import com.gy.love.loveapi.jwt.utils.JwtUtils;
-import com.gy.love.loveapi.repository.UserRepository;
+import com.gy.love.loveapi.mapper.LoveUserMapper;
 import com.gy.love.loveapi.service.UserService;
-import com.gy.love.loveapi.service.support.Items;
-import com.gy.love.loveapi.service.support.OrderType;
-import com.gy.love.loveapi.service.support.PageQuery;
-import com.gy.love.loveapi.service.support.QueryUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author gaoyun
@@ -23,24 +17,25 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-
-    private final Audience audienceEntity;
+    @Autowired
+    private LoveUserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, Audience audienceEntity) {
-        this.userRepository = userRepository;
-        this.audienceEntity = audienceEntity;
+    private Audience audienceEntity;
+
+    @Override
+    public LoveUser findByUserName(String userName) {
+        return userMapper.findByUserName(userName);
     }
 
-
-    /**
-     * @param userName 用户名
-     * @return
-     */
     @Override
-    public User findByName(String userName) {
-        return this.userRepository.findByUserName(userName);
+    public void add(LoveUser u) {
+        userMapper.insertSelective(u);
+    }
+
+    @Override
+    public LoveUser findByName(String userName) {
+        return null;
     }
 
     @Override
@@ -51,40 +46,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String saveReturnId(User user) {
-        this.userRepository.save(user);
-        return user.getId();
+    public LoveUser findById(Integer id) throws Exception {
+        return userMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public void save(User user) {
-        this.userRepository.save(user);
-    }
-
-    @Override
-    public User saveReturnEntity(User user) {
-        return this.userRepository.save(user);
-    }
-
-    @Override
-    public void deleteById(String s) {
-        this.userRepository.deleteById(s);
-    }
-
-    @Override
-    public User queryById(String s) throws Exception {
-        return this.userRepository.getOne(s);
-    }
-
-    @Override
-    public Items<User> query() {
-        List<User> all = this.userRepository.findAll();
-        long count = this.userRepository.count();
-        return new Items<>(count, all);
-    }
-
-    @Override
-    public PageQuery<User> query(Integer currentPage, Integer pageSize, OrderType orderType, String... sortField) {
-        return new QueryUtils<User>().query(userRepository, currentPage, pageSize, orderType, sortField);
-    }
 }

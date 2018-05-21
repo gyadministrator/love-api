@@ -1,7 +1,7 @@
 package com.gy.love.loveapi.annotation.resolvers;
 import com.gy.love.loveapi.annotation.CurrentUser;
 import com.gy.love.loveapi.config.Constants;
-import com.gy.love.loveapi.entity.User;
+import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.jwt.utils.Audience;
 import com.gy.love.loveapi.jwt.utils.JwtUtils;
 import com.gy.love.loveapi.service.UserService;
@@ -53,7 +53,7 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
     @Override
     public boolean supportsParameter(@NotNull MethodParameter parameter) {
         //如果参数类型是User并且有CurrentUser注解则支持
-        return parameter.getParameterType().isAssignableFrom(User.class) &&
+        return parameter.getParameterType().isAssignableFrom(LoveUser.class) &&
                 parameter.hasParameterAnnotation(CurrentUser.class);
     }
 
@@ -86,10 +86,10 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
                 //有key但是得不到用户，抛出异常
                 throw new MissingServletRequestPartException(Constants.JWT_LOGIN_USER);
             }
-            String key = String.valueOf(claims.get(Constants.LOGIN_USER));
+            String key = String.valueOf(claims.get("unique_name"));
 
             //从数据库中查询并返回
-            User userModel = userService.findByName(key);
+            LoveUser userModel = userService.findByUserName(key);
 
             if (userModel != null) {
                 return userModel;
