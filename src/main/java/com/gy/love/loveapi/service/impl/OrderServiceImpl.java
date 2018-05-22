@@ -50,4 +50,9 @@ public class OrderServiceImpl implements OrderService {
         }
         return flag;
     }
+
+    @Override
+    public LoveOrder findByUserId(Integer userId) {
+        return loveOrderMapper.findByUserId(userId);
+    }
 }
