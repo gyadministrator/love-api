@@ -9,13 +9,10 @@ import com.gy.love.loveapi.entity.Page;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 作者：qiguizhen
- * 邮箱：1757282455@qq.com
- */
+
 public interface PhotoService {
 
     void add(LovePhoto lovePhoto,Integer albumId);
 
-    PageInfo<LovePhoto> findAllByPage(Page page,Integer albumId);
+    List<LovePhoto> findAllPhotoByAlbumId(Integer albumId);
 }

@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
 
-/**
- * 作者：qiguizhen
- * 邮箱：1757282455@qq.com
- */
+
 @RestController
 @RequestMapping("/photo")
 @Api(value = "照片管理")
@@ -31,7 +29,7 @@ public class PhotoController {
 
 
     @ApiOperation(value = "照片添加")
-    @PostMapping("/{albumId}/add")
+    @PostMapping("/add/{albumId}")
     public SimpleResponse add(@RequestBody @Valid LovePhoto lovePhoto,@PathVariable("albumId") Integer albumId){
 
         photoService.add(lovePhoto,albumId);
@@ -43,11 +41,11 @@ public class PhotoController {
      * 根据相册id去查找所属照片
      * */
     @ApiOperation(value = "照片显示")
-    @GetMapping("/{albumId}/pagePhoto")
-    public  SimpleResponse pagePhoto(Page page,@PathVariable("albumId") Integer albumId){
-        PageInfo<LovePhoto> info=null;
+    @GetMapping("/pagePhoto/{albumId}")
+    public  SimpleResponse pagePhoto(@PathVariable("albumId") Integer albumId){
+        List<LovePhoto> info=null;
         try {
-           info=photoService.findAllByPage(page,albumId);
+           info=photoService.findAllPhotoByAlbumId(albumId);
         }catch (Exception e){
             e.printStackTrace();
         }

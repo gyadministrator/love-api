@@ -52,6 +52,4 @@ public class AlbumController {
         return simpleResponse(200,"",list);
 
     }
-
-
 }

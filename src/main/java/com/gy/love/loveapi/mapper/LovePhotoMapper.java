@@ -21,5 +21,5 @@ public interface LovePhotoMapper {
 
     int updateByPrimaryKey(LovePhoto record);
 
-    List<LovePhoto> findAllByPage(Page page,Integer albumId);
+    List<LovePhoto> findAllPhotoByAlbumId(Integer albumId);
 }

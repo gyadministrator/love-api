@@ -30,16 +30,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PageInfo<LovePhoto> findAllByPage(Page page,Integer albumId) {
+    public List<LovePhoto> findAllPhotoByAlbumId(Integer albumId) {
 
-        PageHelper.startPage(page.getPage(), page.getPageSize());
+       List<LovePhoto> lovePhotoList=lovePhotoMapper.findAllPhotoByAlbumId(albumId);
 
-        List<LovePhoto> all = lovePhotoMapper.findAllByPage(page, albumId);
-
-        PageInfo<LovePhoto> result=new PageInfo(all);
-
-        return  result;
-
+       return lovePhotoList;
     }
 
 }
