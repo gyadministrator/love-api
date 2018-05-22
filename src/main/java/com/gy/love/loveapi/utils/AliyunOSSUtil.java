@@ -37,7 +37,7 @@ public class AliyunOSSUtil {
         String name = UUID.randomUUID()+ substring;
         InputStream inputStream = file.getInputStream();
 
-        ossClient.putObject("fixed-asset",rootName+"/"+name,inputStream);
+        ossClient.putObject("love-api",rootName+"/"+name,inputStream);
 
         ossClient.shutdown();
 
@@ -59,7 +59,7 @@ public class AliyunOSSUtil {
         String name=uploadFile(file, rootName);
 
         init();
-        ossClient.deleteObject("codetpension", oldName);
+        ossClient.deleteObject("love-api", oldName);
         ossClient.shutdown();
         return name;
     }

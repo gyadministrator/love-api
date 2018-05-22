@@ -3,6 +3,7 @@ package com.gy.love.loveapi.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class LoveAlbum {
     private Integer id;
@@ -13,6 +14,16 @@ public class LoveAlbum {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
+
+    private List<LovePhoto> photos;
+
+    public List<LovePhoto> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<LovePhoto> photos) {
+        this.photos = photos;
+    }
 
     public Integer getId() {
         return id;

@@ -23,9 +23,8 @@ public class PhotoServiceImpl implements PhotoService {
     LovePhotoMapper lovePhotoMapper;
 
     @Override
-    public void add(LovePhoto lovePhoto, Integer albumId) {
+    public void add(LovePhoto lovePhoto) {
 
-        lovePhoto.setAlbumId(albumId);
         lovePhotoMapper.insertSelective(lovePhoto);
     }
 

@@ -16,4 +16,6 @@ public interface AlbumService {
     void add(LoveAlbum loveAlbum, LoveUser user);
 
     List<LoveAlbum> findAllbumByUserId(Integer userId);
+
+    LoveAlbum findById(Integer id);
 }

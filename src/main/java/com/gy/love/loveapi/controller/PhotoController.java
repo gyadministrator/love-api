@@ -29,10 +29,10 @@ public class PhotoController {
 
 
     @ApiOperation(value = "照片添加")
-    @PostMapping("/add/{albumId}")
-    public SimpleResponse add(@RequestBody @Valid LovePhoto lovePhoto,@PathVariable("albumId") Integer albumId){
+    @PostMapping
+    public SimpleResponse add(@RequestBody @Valid LovePhoto lovePhoto){
 
-        photoService.add(lovePhoto,albumId);
+        photoService.add(lovePhoto);
 
         return simpleResponse(200);
     }

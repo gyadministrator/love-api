@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface PhotoService {
 
-    void add(LovePhoto lovePhoto,Integer albumId);
+    void add(LovePhoto lovePhoto);
 
     List<LovePhoto> findAllPhotoByAlbumId(Integer albumId);
 }

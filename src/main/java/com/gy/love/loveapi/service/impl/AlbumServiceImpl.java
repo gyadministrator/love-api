@@ -3,6 +3,7 @@ package com.gy.love.loveapi.service.impl;
 import com.gy.love.loveapi.entity.LoveAlbum;
 import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.mapper.LoveAlbumMapper;
+import com.gy.love.loveapi.mapper.LovePhotoMapper;
 import com.gy.love.loveapi.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class AlbumServiceImpl implements AlbumService {
     @Autowired
     LoveAlbumMapper loveAlbumMapper;
 
+    @Autowired
+    private LovePhotoMapper photoMapper;
+
     @Override
     public void add(LoveAlbum loveAlbum, LoveUser user) {
         loveAlbum.setUserId(user.getId());
@@ -32,6 +36,16 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public List<LoveAlbum> findAllbumByUserId(Integer userId) {
         return loveAlbumMapper.findAllbumByUserId(userId);
+    }
+
+    @Override
+    public LoveAlbum findById(Integer id) {
+
+        LoveAlbum album=loveAlbumMapper.selectByPrimaryKey(id);
+
+        album.setPhotos(photoMapper.findAllPhotoByAlbumId(id));
+
+        return album;
     }
 
 

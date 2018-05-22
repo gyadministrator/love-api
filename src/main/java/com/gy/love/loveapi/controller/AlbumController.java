@@ -34,20 +34,29 @@ public class AlbumController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ApiOperation(value = "相册添加")
-    @PostMapping("")
+    @PostMapping
     public SimpleResponse add(@RequestBody  @Valid LoveAlbum loveAlbum, @CurrentUser LoveUser user) {
         albumService.add(loveAlbum, user);
         return simpleResponse(200);
     }
 
     //根据自己的userid显示自己所拥有的相册列表
-    @ApiOperation(value = "相册显示")
-    @GetMapping()
+    @ApiOperation(value = "个人相册列表")
+    @GetMapping
     public  SimpleResponse findByUserId(@CurrentUser LoveUser user){
 
         List<LoveAlbum> list=albumService.findAllbumByUserId(user.getId());
 
         return simpleResponse(200,"",list);
 
+    }
+
+    @ApiOperation(value="查找相册")
+    @GetMapping("/{id}")
+    public SimpleResponse findById(@PathVariable("id")Integer id){
+
+        LoveAlbum album=albumService.findById(id);
+
+        return simpleResponse(200,album);
     }
 }
