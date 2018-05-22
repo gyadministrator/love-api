@@ -48,7 +48,6 @@ public class UserController {
         LoveUser u = this.userService.findByUserName(user.getUserName());
         String accessToken = null;
         if (u != null) {
-            map.put("user", u);
             String pwd = u.getPassword();
             String md5Pwd = Md5Utils.MD5(user.getPassword());
             if (pwd.equals(md5Pwd)) {
@@ -68,8 +67,12 @@ public class UserController {
                 map.put("token", accessToken);
             }
         }
-        assert u != null;
-        return simpleResponse(200, "", map);
+        if (accessToken == null) {
+            return simpleResponse(500, "", map);
+        } else {
+            map.put("user", u);
+            return simpleResponse(200, "", map);
+        }
     }
 
     @ApiOperation(value = "添加用户")
@@ -89,37 +92,38 @@ public class UserController {
     }
 
 
-    @ApiOperation(value="查找当前用户信息")
+    @ApiOperation(value = "查找当前用户信息")
     @GetMapping
-    public SimpleResponse find(@CurrentUser LoveUser user){
+    public SimpleResponse find(@CurrentUser LoveUser user) {
 
-        LoveUser result=null;
+        LoveUser result = null;
         try {
-            result =userService.findById(user.getId());
+            result = userService.findById(user.getId());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return simpleResponse(200,result);
+        return simpleResponse(200, result);
     }
 
     /**
      * 添加亲属
-     * @param type  类型，0：成为当前用户的家长；1：成为当前用户的孩子
-     * @param id    被添加的用户ID
-     * @param user  当前用户
+     *
+     * @param type 类型，0：成为当前用户的家长；1：成为当前用户的孩子
+     * @param id   被添加的用户ID
+     * @param user 当前用户
      * @return
      */
     @ApiOperation(value = "添加亲属")
     @PostMapping("/family/{type}/{id}")
-    public SimpleResponse addFamily(@PathVariable("type")Integer type,@PathVariable("id")Integer id,@CurrentUser LoveUser user){
+    public SimpleResponse addFamily(@PathVariable("type") Integer type, @PathVariable("id") Integer id, @CurrentUser LoveUser user) {
 
         try {
-            userService.addFamily(type,id,user);
+            userService.addFamily(type, id, user);
         } catch (Exception e) {
             e.printStackTrace();
-            return simpleResponse(500,"类型错误");
+            return simpleResponse(500, "类型错误");
         }
         return simpleResponse(200);
     }
