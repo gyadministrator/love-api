@@ -67,7 +67,6 @@ public class UserController {
                 map.put("token", accessToken);
             }
         }
-        assert u != null;
         if (accessToken == null) {
             return simpleResponse(500, "", map);
         } else {
