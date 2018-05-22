@@ -60,4 +60,16 @@ public class LoveCourse {
     public void setTeacher(String teacher) {
         this.teacher = teacher == null ? null : teacher.trim();
     }
+
+    @Override
+    public String toString() {
+        return "LoveCourse{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", detail='" + detail + '\'' +
+                ", url='" + url + '\'' +
+                ", number=" + number +
+                ", teacher='" + teacher + '\'' +
+                '}';
+    }
 }

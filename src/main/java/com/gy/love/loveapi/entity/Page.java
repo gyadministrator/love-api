@@ -8,11 +8,8 @@ package com.gy.love.loveapi.entity;
 public class Page {
     private String column="id";
     private String keyword="";
-    private int pageNum=1;
-    private int pageSize=10;
-
     private int page=1;
-    private int limit=30;
+    private int pageSize=10;
 
     public String getColumn() {
         return column;
@@ -30,22 +27,6 @@ public class Page {
         this.keyword = keyword;
     }
 
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
     public int getPage() {
         return page;
     }
@@ -54,11 +35,11 @@ public class Page {
         this.page = page;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

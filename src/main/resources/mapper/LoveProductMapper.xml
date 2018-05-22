@@ -18,6 +18,11 @@
     from love_product
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findAllByPage" parameterType="Page" resultType="LoveProduct">
+    select <include refid="Base_Column_List"></include>
+    from love_product
+    where ${column} like concat('%',#{keyword},'%')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from love_product
     where id = #{id,jdbcType=INTEGER}
