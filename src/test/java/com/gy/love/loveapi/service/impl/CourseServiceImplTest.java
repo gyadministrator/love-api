@@ -40,7 +40,7 @@ public class CourseServiceImplTest {
     @Test
     public void add() {
         LoveCourse loveCourse = new LoveCourse();
-        loveCourse.setId(0011);
+       /* loveCourse.setId(0011);*/
         loveCourse.setUrl("jjj");
         loveCourse.setDetail("ces");
         loveCourse.setNumber(100);
