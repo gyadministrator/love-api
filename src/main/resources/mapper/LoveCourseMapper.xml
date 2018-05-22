@@ -103,4 +103,9 @@
       teacher = #{teacher,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findAllByPage" parameterType="Page" resultType="com.gy.love.loveapi.entity.LoveCourse">
+    select <include refid="Base_Column_List"></include>
+    from love_course
+    where ${column} like concat('%',#{keyword},'%')
+  </select>
 </mapper>

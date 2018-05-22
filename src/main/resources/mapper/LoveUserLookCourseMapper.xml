@@ -9,6 +9,11 @@
   <sql id="Base_Column_List" >
     id, user_id, crouse_id
   </sql>
+  <select id="findAllByCourseId" parameterType="String" resultType="com.gy.love.loveapi.entity.LoveUserLookCourse">
+    select <include refid="Base_Column_List"></include>
+    from love_user_look_course
+    where crouse_id = #{courseId}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

@@ -17,6 +17,16 @@ public class LoveDetail {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
 
+    private LoveUser user;
+
+    public LoveUser getUser() {
+        return user;
+    }
+
+    public void setUser(LoveUser user) {
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }

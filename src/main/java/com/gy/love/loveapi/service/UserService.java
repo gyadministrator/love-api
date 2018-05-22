@@ -1,6 +1,9 @@
 package com.gy.love.loveapi.service;
 
 import com.gy.love.loveapi.entity.LoveUser;
+import org.apache.catalina.User;
+
+import java.util.List;
 
 /**
  * @author gaoyun
@@ -34,4 +37,6 @@ public interface UserService{
     void add(LoveUser u);
 
     LoveUser findByUserName(String userName);
+
+    List<LoveUser> findFamilyById(Integer id);
 }
