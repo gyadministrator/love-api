@@ -19,7 +19,12 @@
     from love_order
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="findAllByPage" parameterType="Page" resultType="LoveOrder">
+  <select id="findByUserId" resultType="com.gy.love.loveapi.entity.LoveOrder" parameterType="java.lang.Integer">
+    SELECT
+    <include refid="Base_Column_List"/>
+   from love_order
+   where user_id = #{userId,jdbcType=INTEGER}</select>
+  <select id="findAllByPage" parameterType="com.gy.love.loveapi.entity.Page" resultType="com.gy.love.loveapi.entity.LoveOrder">
     select <include refid="Base_Column_List"></include>
     from love_order
     where ${column} like concat('%',#{keyword},'%')

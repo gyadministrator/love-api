@@ -19,4 +19,6 @@ public interface LoveOrderMapper {
     int updateByPrimaryKey(LoveOrder record);
 
     List<LoveOrder> findAllByPage(Page page);
+
+    LoveOrder findByUserId(Integer id);
 }
