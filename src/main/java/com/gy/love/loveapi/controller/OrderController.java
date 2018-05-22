@@ -2,10 +2,7 @@ package com.gy.love.loveapi.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.gy.love.loveapi.annotation.CurrentUser;
-import com.gy.love.loveapi.entity.LoveOrder;
-import com.gy.love.loveapi.entity.LoveProduct;
-import com.gy.love.loveapi.entity.LoveUser;
-import com.gy.love.loveapi.entity.Page;
+import com.gy.love.loveapi.entity.*;
 import com.gy.love.loveapi.service.OrderService;
 import com.gy.love.loveapi.service.ProductService;
 import com.gy.love.loveapi.utils.response.SimpleResponse;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.Date;
+import java.util.Map;
 
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
 
@@ -32,18 +30,12 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    /**
-     * 订单添加，
-     * @param order
-     * @return
-     */
+
     @ApiOperation(value = "订单添加")
     @PostMapping
-    public SimpleResponse add(@RequestBody @Valid LoveOrder order,
-                              @RequestBody @Valid LoveProduct product, @CurrentUser LoveUser loveUser){
+    public SimpleResponse add(@RequestBody  LoveOrder order, @CurrentUser LoveUser loveUser){
         order.setDate(new Date());
         order.setUserId(loveUser.getId());
-        order.setProductId(product.getId());
         orderService.add(order);
         return simpleResponse(200);
     }
@@ -71,8 +63,8 @@ public class OrderController {
      * @return
      */
     @ApiOperation(value = "订单查找userId")
-    @GetMapping("userId/{id}")
-    public SimpleResponse findBYUserId(@CurrentUser LoveUser user){
+    @GetMapping("/userId")
+    public SimpleResponse findByUserId(@CurrentUser LoveUser user){
         LoveOrder order = null;
         try{
             order= orderService.findByUserId(user.getId());
@@ -87,7 +79,7 @@ public class OrderController {
      * @return
      */
     @ApiOperation(value = "分页查找")
-    @GetMapping
+    @GetMapping("/page")
     public SimpleResponse findAllPage(Page page){
         PageInfo<LoveOrder> pageInfo=null;
         try{
