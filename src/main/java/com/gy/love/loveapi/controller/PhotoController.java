@@ -27,7 +27,6 @@ public class PhotoController {
     @Autowired
     PhotoService photoService;
 
-
     @ApiOperation(value = "照片添加")
     @PostMapping
     public SimpleResponse add(@RequestBody @Valid LovePhoto lovePhoto){
@@ -35,20 +34,5 @@ public class PhotoController {
         photoService.add(lovePhoto);
 
         return simpleResponse(200);
-    }
-
-    /*
-     * 根据相册id去查找所属照片
-     * */
-    @ApiOperation(value = "照片显示")
-    @GetMapping("/pagePhoto/{albumId}")
-    public  SimpleResponse pagePhoto(@PathVariable("albumId") Integer albumId){
-        List<LovePhoto> info=null;
-        try {
-           info=photoService.findAllPhotoByAlbumId(albumId);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return simpleResponse(200,"",info);
     }
 }
