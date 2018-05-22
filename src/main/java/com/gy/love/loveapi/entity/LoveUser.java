@@ -1,5 +1,6 @@
 package com.gy.love.loveapi.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 public class LoveUser {
@@ -18,6 +19,16 @@ public class LoveUser {
     private Float integral;
 
     private Float todayIntegral;
+
+    private List<LoveUser> family;
+
+    public List<LoveUser> getFamily() {
+        return family;
+    }
+
+    public void setFamily(List<LoveUser> family) {
+        this.family = family;
+    }
 
     public Integer getId() {
         return id;
