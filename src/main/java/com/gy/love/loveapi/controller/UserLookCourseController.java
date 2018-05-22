@@ -1,6 +1,7 @@
 package com.gy.love.loveapi.controller;
 
 import com.gy.love.loveapi.annotation.CurrentUser;
+import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.entity.LoveUserLookCourse;
 import com.gy.love.loveapi.service.UserLookCourseService;
 import com.gy.love.loveapi.utils.response.SimpleResponse;
@@ -30,7 +31,8 @@ public class UserLookCourseController {
 
     @ApiOperation(value = "课程观看记录添加")
     @PostMapping
-    public SimpleResponse add(@RequestBody @Valid LoveUserLookCourse loveUserLookCourse) {
+    public SimpleResponse add(@RequestBody @Valid LoveUserLookCourse loveUserLookCourse,@CurrentUser LoveUser user) {
+       loveUserLookCourse.setUserId(user.getId());
         userLookCourseService.add(loveUserLookCourse);
         return simpleResponse(200);
     }
