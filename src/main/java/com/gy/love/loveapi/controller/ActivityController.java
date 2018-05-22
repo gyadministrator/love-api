@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
@@ -89,7 +90,8 @@ public class ActivityController {
 
         try {
 
-            List<LoveUser> family=userService.findFamilyById(user.getId());
+            List<LoveUser> family=new ArrayList<>();
+            family.add(user);
 
             activityList = activityService.findByDate(date,family);
 
@@ -113,7 +115,8 @@ public class ActivityController {
 
         try {
 
-            List<LoveUser> family=userService.findFamilyById(user.getId());
+            List<LoveUser> family=new ArrayList<>();
+            family.add(user);
 
             info=activityService.findAllByPage(page,family);
 

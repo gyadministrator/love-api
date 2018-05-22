@@ -15,6 +15,25 @@ public class LoveCall {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
+    private LoveUser parent;
+    private LoveUser children;
+
+    public LoveUser getParent() {
+        return parent;
+    }
+
+    public void setParent(LoveUser parent) {
+        this.parent = parent;
+    }
+
+    public LoveUser getChildren() {
+        return children;
+    }
+
+    public void setChildren(LoveUser children) {
+        this.children = children;
+    }
+
     public Integer getId() {
         return id;
     }

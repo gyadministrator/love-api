@@ -74,7 +74,7 @@ public class ActivityServiceImpl implements ActivityService{
 
         for (LoveActivity loveActivity : activityList) {
             loveActivity.setDetails(detailMapper.findByActivityId(loveActivity.getId()));
-
+            loveActivity.setTarget(userMapper.selectByPrimaryKey(loveActivity.getTargetId()));
             for (LoveDetail loveDetail : loveActivity.getDetails()) {
                 loveDetail.setUser(userMapper.selectByPrimaryKey(loveDetail.getUserId()));
             }

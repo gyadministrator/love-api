@@ -19,6 +19,26 @@ public class LoveActivity {
 
     private List<LoveDetail> details;
 
+    private Integer targetId;
+
+    private LoveUser target;
+
+    public LoveUser getTarget() {
+        return target;
+    }
+
+    public void setTarget(LoveUser target) {
+        this.target = target;
+    }
+
+    public Integer getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(Integer targetId) {
+        this.targetId = targetId;
+    }
+
     public Boolean getNoticed() {
         return isNoticed;
     }

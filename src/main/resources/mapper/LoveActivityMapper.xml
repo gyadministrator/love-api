@@ -7,19 +7,27 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="date" property="date" jdbcType="TIMESTAMP" />
     <result column="is_noticed" property="isNoticed" jdbcType="TINYINT" />
+    <result column="target_id" property="targetId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, content, date, is_noticed
+    id, title, content, date, is_noticed ,target_id
   </sql>
   <sql id="Activity_Base_Column_List" >
-    a.id, a.title, a.content, a.date, a.is_noticed
+    a.id, a.title, a.content, a.date, a.is_noticed , a.target_id
   </sql>
   <select id="findByDate" parameterType="map" resultType="LoveActivity">
     select <include refid="Activity_Base_Column_List"></include>
-    from love_activity a , love_user_activity ua
+    from love_activity a
+    where a.target_id in
+    <foreach collection="users" item="user" index="index" open="(" close=")" separator=",">
+      #{user.id}
+    </foreach>
+    UNION
+    select <include refid="Activity_Base_Column_List"></include>
+    from love_activity a ,love_user_activity ua
     where date like concat(#{date},'%') and a.id=ua.activity_id and ua.user_id in
     <foreach collection="users" item="user" index="index" open="(" close=")" separator=",">
-        #{user.id}
+      #{user.id}
     </foreach>
   </select>
   <select id="findAllByPage" parameterType="map" resultType="LoveActivity">
@@ -64,6 +72,9 @@
       <if test="isNoticed != null" >
         is_noticed,
       </if>
+      <if test="targetId != null" >
+        target_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,6 +91,9 @@
       </if>
       <if test="isNoticed != null" >
         #{isNoticed,jdbcType=TINYINT},
+      </if>
+      <if test="targetId != null" >
+        #{targetId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
