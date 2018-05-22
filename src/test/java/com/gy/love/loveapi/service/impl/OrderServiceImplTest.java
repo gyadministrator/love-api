@@ -1,6 +1,8 @@
 package com.gy.love.loveapi.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.gy.love.loveapi.entity.LoveOrder;
+import com.gy.love.loveapi.entity.Page;
 import com.gy.love.loveapi.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,13 +24,14 @@ public class OrderServiceImplTest {
     private OrderService orderService;
     @Test
     public void findById() {
-
         LoveOrder byId = orderService.findById(1);
         System.out.println(byId.toString());
     }
 
     @Test
     public void findAllByPage() {
+        Page page =new Page();
+        System.out.println(orderService.findAllByPage(page).toString());
     }
 
     @Test
