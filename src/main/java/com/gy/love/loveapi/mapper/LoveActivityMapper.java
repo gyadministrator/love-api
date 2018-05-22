@@ -21,7 +21,7 @@ public interface LoveActivityMapper {
 
     int updateByPrimaryKey(LoveActivity record);
 
-    List<LoveActivity> findAllByPage(Page page);
+    List<LoveActivity> findAllByPage(Map<String ,Object> parameter);
 
     List<LoveActivity> findByDate(Map<String ,Object> parameter);
 }
