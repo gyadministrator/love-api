@@ -16,6 +16,13 @@
     from love_photo
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="findAllByPage"  parameterType="com.gy.love.loveapi.entity.LovePhoto">
+    select <include refid="Base_Column_List"></include>
+    from love_photo
+    where ${column} like concat('%',#{keyword},'%') and album_id=#{albumId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from love_photo
     where id = #{id,jdbcType=INTEGER}
