@@ -1,6 +1,9 @@
 package com.gy.love.loveapi.mapper;
 
 import com.gy.love.loveapi.entity.LoveUserLookCourse;
+import com.gy.love.loveapi.entity.Page;
+
+import java.util.List;
 
 public interface LoveUserLookCourseMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,5 @@ public interface LoveUserLookCourseMapper {
     int updateByPrimaryKeySelective(LoveUserLookCourse record);
 
     int updateByPrimaryKey(LoveUserLookCourse record);
+    List<LoveUserLookCourse> findAllByCourseId(String courseId);
 }

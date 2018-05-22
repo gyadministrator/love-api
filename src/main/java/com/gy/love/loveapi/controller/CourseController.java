@@ -27,14 +27,14 @@ public class CourseController {
     private CourseService courseService;
 
     @ApiOperation(value = "课程添加")
-    @PostMapping("/add")
+    @PostMapping
     public SimpleResponse add(@RequestBody @Valid LoveCourse loveCourse) {
         courseService.add(loveCourse);
         return simpleResponse(200);
     }
 
     @ApiOperation(value = "课程分页")
-    @GetMapping("/findByPage")
+    @GetMapping
     public SimpleResponse findByPage(Page page) {
 
         PageInfo<LoveCourse> info = null;
@@ -48,9 +48,9 @@ public class CourseController {
 
         return simpleResponse(200, "", info);
     }
-
+/*
     @ApiOperation(value = "课程修改")
-    @PostMapping("/updateCourseByCourseId")
+    @PostMapping
     public SimpleResponse updateCourseBycourseId(@RequestBody @Valid LoveCourse loveCourse) {
 
         LoveCourse course = null;
@@ -66,12 +66,11 @@ public class CourseController {
             return simpleResponse(200);
         }
         return simpleResponse(1001);
-    }
+    }*/
 
     @ApiOperation(value = "课程详细查找")
-    @GetMapping("/findDetailByCourseId")
-    public SimpleResponse findDetailByCourseId(Integer courseId) {
-System.out.print(courseId+"444");
+    @GetMapping("/id/{id}")
+    public SimpleResponse findDetailByCourseId(@PathVariable("id")Integer courseId) {
         LoveCourse course = null;
 
         try {
