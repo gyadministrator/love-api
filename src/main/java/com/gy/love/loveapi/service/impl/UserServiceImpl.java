@@ -1,11 +1,14 @@
 package com.gy.love.loveapi.service.impl;
 
+import com.gy.love.loveapi.entity.LoveParentChildren;
 import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.jwt.utils.Audience;
 import com.gy.love.loveapi.jwt.utils.JwtUtils;
+import com.gy.love.loveapi.mapper.LoveParentChildrenMapper;
 import com.gy.love.loveapi.mapper.LoveUserMapper;
 import com.gy.love.loveapi.service.UserService;
 import io.jsonwebtoken.Claims;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private LoveUserMapper userMapper;
+
+    @Autowired
+    private LoveParentChildrenMapper parentChildrenMapper;
 
     @Autowired
     private Audience audienceEntity;
@@ -59,6 +65,27 @@ public class UserServiceImpl implements UserService {
     public LoveUser findByName(String userName) {
         return null;
     }
+
+    @Override
+    public void addFamily(Integer type,Integer id,LoveUser user) throws Exception{
+
+        LoveParentChildren family=new LoveParentChildren();
+
+        if(type==0){
+            //成为用户的家长
+            family.setParentId(id);
+            family.setChildrenId(user.getId());
+        }else if(type==1){
+            //成为用户的子女
+            family.setParentId(user.getId());
+            family.setChildrenId(id);
+        }else{
+            throw new Exception("添加类型错误，0目标将成为家长，1目标将成为孩子");
+        }
+
+        parentChildrenMapper.insertSelective(family);
+    }
+
     @Override
     public String parseToken(String token) {
         String auth = token.substring(7, token.toString().length());
@@ -67,7 +94,15 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public LoveUser findById(Integer id) throws Exception {
-        return userMapper.selectByPrimaryKey(id);
+
+        LoveUser user=userMapper.selectByPrimaryKey(id);
+
+        List<LoveUser> family=findFamilyById(id);
+        family.remove(user);
+
+        user.setFamily(family);
+
+        return user;
     }
 
 }

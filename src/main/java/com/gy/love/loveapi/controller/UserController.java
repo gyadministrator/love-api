@@ -1,5 +1,6 @@
 package com.gy.love.loveapi.controller;
 
+import com.gy.love.loveapi.annotation.CurrentUser;
 import com.gy.love.loveapi.config.Constants;
 import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.jwt.utils.AccessToken;
@@ -88,20 +89,39 @@ public class UserController {
     }
 
 
-    @ApiOperation(value="通过ID查找")
-    @GetMapping("/{id}")
-    public SimpleResponse findById(@PathVariable("id")Integer id){
+    @ApiOperation(value="查找当前用户信息")
+    @GetMapping
+    public SimpleResponse find(@CurrentUser LoveUser user){
 
-        LoveUser user=new LoveUser();
+        LoveUser result=null;
         try {
-            user=this.userService.findById(id);
-
-            System.out.println("--->"+user.getId());
+            result =userService.findById(user.getId());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return simpleResponse(200,"",user);
+        return simpleResponse(200,result);
     }
+
+    /**
+     * 添加亲属
+     * @param type  类型，0：成为当前用户的家长；1：成为当前用户的孩子
+     * @param id    被添加的用户ID
+     * @param user  当前用户
+     * @return
+     */
+    @ApiOperation(value = "添加亲属")
+    @PostMapping("/family/{type}/{id}")
+    public SimpleResponse addFamily(@PathVariable("type")Integer type,@PathVariable("id")Integer id,@CurrentUser LoveUser user){
+
+        try {
+            userService.addFamily(type,id,user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return simpleResponse(500,"类型错误");
+        }
+        return simpleResponse(200);
+    }
+
 }
