@@ -14,6 +14,12 @@
   <sql id="Base_Column_List" >
     id, user_id, end_date, titile, content, money, is_public, is_success
   </sql>
+  <select id="findAllByPage" parameterType="Page" resultType="LoveDesire">
+    select <include refid="Base_Column_List"></include>
+    from love_desire
+    where ${column} like concat('%',#{keyword},'%')
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

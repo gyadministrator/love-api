@@ -1,6 +1,9 @@
 package com.gy.love.loveapi.mapper;
 
 import com.gy.love.loveapi.entity.LoveDesire;
+import com.gy.love.loveapi.entity.Page;
+
+import java.util.List;
 
 public interface LoveDesireMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface LoveDesireMapper {
     int updateByPrimaryKeySelective(LoveDesire record);
 
     int updateByPrimaryKey(LoveDesire record);
+
+    List<LoveDesire> findAllByPage(Page page);
 }
