@@ -34,11 +34,15 @@ public class ActivityServiceImpl implements ActivityService{
     private LoveUserMapper userMapper;
 
     @Override
-    public PageInfo<LoveActivity> findAllByPage(Page page) {
+    public PageInfo<LoveActivity> findAllByPage(Page page,List<LoveUser> family) {
+
+        Map<String ,Object> parameter=new HashMap<>();
+        parameter.put("page",page);
+        parameter.put("users",family);
 
         PageHelper.startPage(page.getPage(),page.getPageSize());
 
-        List<LoveActivity> all=activityMapper.findAllByPage(page);
+        List<LoveActivity> all=activityMapper.findAllByPage(parameter);
 
         PageInfo<LoveActivity> result=new PageInfo<>(all);
 

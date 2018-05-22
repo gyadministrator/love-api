@@ -4,10 +4,12 @@ package com.gy.love.loveapi.controller;
 import com.github.pagehelper.PageInfo;
 import com.gy.love.loveapi.annotation.CurrentUser;
 import com.gy.love.loveapi.entity.LoveActivity;
+import com.gy.love.loveapi.entity.LoveDetail;
 import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.entity.Page;
 import com.gy.love.loveapi.jwt.utils.Audience;
 import com.gy.love.loveapi.service.ActivityService;
+import com.gy.love.loveapi.service.DetailService;
 import com.gy.love.loveapi.service.UserService;
 import com.gy.love.loveapi.utils.response.SimpleResponse;
 import io.swagger.annotations.Api;
@@ -18,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.Date;
 import java.util.List;
 
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
@@ -35,6 +35,9 @@ public class ActivityController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DetailService detailService;
 
     @Autowired
     private Audience audienceEntity;
@@ -62,6 +65,7 @@ public class ActivityController {
         LoveActivity activity=null;
 
         try {
+
             activity = activityService.findById(id);
 
         } catch (Exception e) {
@@ -103,12 +107,15 @@ public class ActivityController {
      */
     @ApiOperation(value = "活动分页")
     @GetMapping
-    public SimpleResponse findByPage(Page page){
+    public SimpleResponse findByPage(Page page,@CurrentUser LoveUser user){
 
         PageInfo<LoveActivity> info=null;
 
         try {
-            info=activityService.findAllByPage(page);
+
+            List<LoveUser> family=userService.findFamilyById(user.getId());
+
+            info=activityService.findAllByPage(page,family);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,5 +123,26 @@ public class ActivityController {
 
         return simpleResponse(200,"",info);
     }
+
+    @ApiOperation(value = "活动详细添加")
+    @PostMapping(value="/{activityId}/detail")
+    public SimpleResponse detailAdd(@PathVariable("activityId")Integer activityId,@RequestBody LoveDetail detail,@CurrentUser LoveUser user){
+
+        detail.setActivityId(activityId);
+
+        detailService.add(detail,user);
+
+        return simpleResponse(200);
+    }
+
+    @ApiOperation(value = "活动详细查找")
+    @GetMapping(value="/detail/{id}")
+    public SimpleResponse findDetailById(@PathVariable("id")Integer id){
+
+        LoveDetail detail=detailService.findById(id);
+
+        return simpleResponse(200,detail);
+    }
+
 
 }

@@ -13,7 +13,7 @@ public interface ActivityService{
 
     LoveActivity findById(Integer id);
 
-    PageInfo<LoveActivity> findAllByPage(Page page);
+    PageInfo<LoveActivity> findAllByPage(Page page,List<LoveUser> family);
 
     void add(LoveActivity activity, LoveUser user);
 
