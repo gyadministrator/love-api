@@ -12,6 +12,16 @@
   <sql id="Base_Column_List" >
     id, user_id, activity_id, content, image, date
   </sql>
+  <select id="findAllByPage" parameterType="Page" resultType="LoveDetail">
+    select <include refid="Base_Column_List"></include>
+    from love_detail
+    where ${column} like concat('%',#{keyword},'%')
+  </select>
+  <select id="findByActivityId" parameterType="int" resultType="LoveDetail">
+    select <include refid="Base_Column_List"></include>
+    from love_detail
+    where activity_id =#{id}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

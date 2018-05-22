@@ -4,10 +4,12 @@ package com.gy.love.loveapi.controller;
 import com.github.pagehelper.PageInfo;
 import com.gy.love.loveapi.annotation.CurrentUser;
 import com.gy.love.loveapi.entity.LoveActivity;
+import com.gy.love.loveapi.entity.LoveDetail;
 import com.gy.love.loveapi.entity.LoveUser;
 import com.gy.love.loveapi.entity.Page;
 import com.gy.love.loveapi.jwt.utils.Audience;
 import com.gy.love.loveapi.service.ActivityService;
+import com.gy.love.loveapi.service.DetailService;
 import com.gy.love.loveapi.service.UserService;
 import com.gy.love.loveapi.utils.response.SimpleResponse;
 import io.swagger.annotations.Api;
@@ -18,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
 
@@ -37,6 +37,9 @@ public class ActivityController {
     private UserService userService;
 
     @Autowired
+    private DetailService detailService;
+
+    @Autowired
     private Audience audienceEntity;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -50,13 +53,19 @@ public class ActivityController {
         return simpleResponse(200);
     }
 
-    @ApiOperation(value = "活动查找")
-    @GetMapping("/{id}")
+    /**
+     * 根据ID查找
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "活动查找ById")
+    @GetMapping("/id/{id}")
     public SimpleResponse findById(@PathVariable("id")Integer id){
 
         LoveActivity activity=null;
 
         try {
+
             activity = activityService.findById(id);
 
         } catch (Exception e) {
@@ -66,14 +75,47 @@ public class ActivityController {
         return simpleResponse(200,"",activity);
     }
 
+    /**
+     * 根据时间查找
+     * @param date  时间，精确到日即可，如：2018-05-20
+     * @param user 用户id
+     * @return
+     */
+    @ApiOperation(value = "活动查找ByDate")
+    @GetMapping("/date/{Date}")
+    public SimpleResponse findByDate(@PathVariable("Date")String date,@CurrentUser LoveUser user){
+
+        List<LoveActivity> activityList=null;
+
+        try {
+
+            List<LoveUser> family=userService.findFamilyById(user.getId());
+
+            activityList = activityService.findByDate(date,family);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return simpleResponse(200,"",activityList);
+    }
+
+    /**
+     * 分页查找
+     * @param page 分页，page：页面号，默认1；pageSize：页面大小，默认10；column：列，默认id；keyword：关键字，默认空
+     * @return
+     */
     @ApiOperation(value = "活动分页")
     @GetMapping
-    public SimpleResponse findByPage(Page page){
+    public SimpleResponse findByPage(Page page,@CurrentUser LoveUser user){
 
         PageInfo<LoveActivity> info=null;
 
         try {
-            info=activityService.findAllByPage(page);
+
+            List<LoveUser> family=userService.findFamilyById(user.getId());
+
+            info=activityService.findAllByPage(page,family);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,25 +124,24 @@ public class ActivityController {
         return simpleResponse(200,"",info);
     }
 
-    /**
-     * 根据活动ID查找所有详细
-     * @param activityId   活动ID
-     * @return
-     */
+    @ApiOperation(value = "活动详细添加")
+    @PostMapping(value="/{activityId}/detail")
+    public SimpleResponse detailAdd(@PathVariable("activityId")Integer activityId,@RequestBody LoveDetail detail,@CurrentUser LoveUser user){
+
+        detail.setActivityId(activityId);
+
+        detailService.add(detail,user);
+
+        return simpleResponse(200);
+    }
+
     @ApiOperation(value = "活动详细查找")
-    @GetMapping("/{activityId}/detail")
-    public SimpleResponse findDetailByActivityId(@PathVariable("activityId")Integer activityId){
+    @GetMapping(value="/detail/{id}")
+    public SimpleResponse findDetailById(@PathVariable("id")Integer id){
 
-        LoveActivity activity=null;
+        LoveDetail detail=detailService.findById(id);
 
-        try {
-            //activity = this.activityService.queryById(id);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return simpleResponse(200,"",activity);
+        return simpleResponse(200,detail);
     }
 
 

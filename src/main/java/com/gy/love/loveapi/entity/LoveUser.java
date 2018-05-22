@@ -1,5 +1,8 @@
 package com.gy.love.loveapi.entity;
 
+import java.util.List;
+import java.util.Objects;
+
 public class LoveUser {
     private Integer id;
 
@@ -16,6 +19,16 @@ public class LoveUser {
     private Float integral;
 
     private Float todayIntegral;
+
+    private List<LoveUser> family;
+
+    public List<LoveUser> getFamily() {
+        return family;
+    }
+
+    public void setFamily(List<LoveUser> family) {
+        this.family = family;
+    }
 
     public Integer getId() {
         return id;
@@ -79,5 +92,35 @@ public class LoveUser {
 
     public void setTodayIntegral(Float todayIntegral) {
         this.todayIntegral = todayIntegral;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        LoveUser loveUser = (LoveUser) o;
+
+        if(this.getId().equals(loveUser.getId())){
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "LoveUser{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", phone='" + phone + '\'' +
+                ", integral=" + integral +
+                ", todayIntegral=" + todayIntegral +
+                '}';
     }
 }

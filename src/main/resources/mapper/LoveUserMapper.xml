@@ -14,6 +14,19 @@
   <sql id="Base_Column_List" >
     id, user_name, password, name, image, phone, integral, today_integral
   </sql>
+  <sql id="User_Base_Column_List" >
+    u.id, u.user_name, u.password, u.name, u.image, u.phone, u.integral, u.today_integral
+  </sql>
+  <select id="findByChildrenId" parameterType="int" resultType="LoveUser">
+    select <include refid="User_Base_Column_List"></include>
+    from love_user u,love_parent_children pc
+    where u.id=pc.parent_id and pc.children_id=#{id}
+  </select>
+  <select id="findByParentId" parameterType="int" resultType="LoveUser">
+    select <include refid="User_Base_Column_List"></include>
+    from love_user u,love_parent_children pc
+    where u.id=pc.children_id and pc.parent_id=#{id}
+  </select>
   <select id="findByUserName" parameterType="string" resultType="LoveUser">
     select <include refid="Base_Column_List"></include>
     from love_user
