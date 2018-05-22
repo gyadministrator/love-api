@@ -34,12 +34,10 @@ public class AlbumController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ApiOperation(value = "相册添加")
-    @PostMapping("/add")
+    @PostMapping("")
     public SimpleResponse add(@RequestBody  @Valid LoveAlbum loveAlbum, @CurrentUser LoveUser user) {
-
-            albumService.add(loveAlbum, user);
-
-            return simpleResponse(200);
+        albumService.add(loveAlbum, user);
+        return simpleResponse(200);
     }
 
     //根据自己的userid显示自己所拥有的相册列表

@@ -21,6 +21,32 @@ public class LoveDesire {
 
     private Boolean isSuccess;
 
+    private String img;
+
+    public Boolean getPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(Boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public Boolean getSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(Boolean success) {
+        isSuccess = success;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public Integer getId() {
         return id;
     }

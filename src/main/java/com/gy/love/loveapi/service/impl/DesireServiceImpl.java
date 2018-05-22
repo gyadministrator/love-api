@@ -34,8 +34,8 @@ import java.util.List;
 
     @Override
     public void add(LoveDesire loveDesire,@CurrentUser LoveUser loveUser) {
-
+        loveDesire.setIsSuccess(false);
         loveDesire.setUserId(loveUser.getId());
-       loveDesireMapper.insertSelective(loveDesire);
+        loveDesireMapper.insertSelective(loveDesire);
     }
 }

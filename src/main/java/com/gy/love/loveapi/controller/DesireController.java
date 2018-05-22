@@ -36,7 +36,7 @@ public class DesireController {
         }
 
     @ApiOperation(value = "查找愿望")
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public SimpleResponse findById(@PathVariable("id") Integer id){
         LoveDesire loveDesire=null;
         try {
