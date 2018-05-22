@@ -34,7 +34,7 @@ public class ExpressController {
         expressService.add(loveExpress);
         return simpleResponse(200);
     }
-    @ApiOperation(value = "订单方式查找id")
+    @ApiOperation(value = "快递方式查找id")
     @GetMapping("id/{id}")
     public SimpleResponse findById(@PathVariable("id")Integer id){
         LoveExpress express = null;

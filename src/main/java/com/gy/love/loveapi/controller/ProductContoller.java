@@ -23,7 +23,7 @@ import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleRes
 @RestController
 @RequestMapping("/product")
 @Api(value = "商品")
-public class Product {
+public class ProductContoller {
     @Autowired
     private ProductService productService;
 

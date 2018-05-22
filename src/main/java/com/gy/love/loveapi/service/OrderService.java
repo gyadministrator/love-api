@@ -14,5 +14,5 @@ public interface OrderService {
     PageInfo<LoveOrder> findAllByPage(Page page);
     void add(LoveOrder order);
     Boolean update(LoveOrder order);
-    LoveOrder findByUserId(Integer userId);
+    LoveOrder findByUserId(Integer userid);
 }
