@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public class AliyunOSSUtil {
     private String endpoint = "oss-cn-beijing.aliyuncs.com";
-    private String accessKeyId = "LTAI5chXq8mUQxhZ";
-    private String accessKeySecret = "gxB275N1JC9qiiOn552wYZLWDwRwb3";
+    private String accessKeyId = "LTAIFEu1lB27Z1nz";
+    private String accessKeySecret = "mdw1dL4G4FQUskqnInbkOmPFOVj1yA";
     private OSSClient ossClient;
 
     public AliyunOSSUtil(){
@@ -29,7 +29,7 @@ public class AliyunOSSUtil {
      * @throws IOException
      */
     public String uploadFile(MultipartFile file, String rootName) throws IOException{
-        if (file.getSize() > 10 * 1024 * 1024) {
+        if (file.getSize() > 100 * 1024 * 1024) {
             return null;
         }
         String originalFilename = file.getOriginalFilename();
@@ -37,7 +37,7 @@ public class AliyunOSSUtil {
         String name = UUID.randomUUID()+ substring;
         InputStream inputStream = file.getInputStream();
 
-        ossClient.putObject("love-api",rootName+"/"+name,inputStream);
+        ossClient.putObject("love-api-1",rootName+"/"+name,inputStream);
 
         ossClient.shutdown();
 
@@ -59,7 +59,7 @@ public class AliyunOSSUtil {
         String name=uploadFile(file, rootName);
 
         init();
-        ossClient.deleteObject("love-api", oldName);
+        ossClient.deleteObject("love-api-1", oldName);
         ossClient.shutdown();
         return name;
     }

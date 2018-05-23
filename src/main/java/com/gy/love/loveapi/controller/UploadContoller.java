@@ -22,7 +22,7 @@ public class UploadContoller {
             AliyunOSSUtil aliyunOSSUtil=new AliyunOSSUtil();
             String image=aliyunOSSUtil.uploadFile(file,"image");
 
-            image="https://love-api.oss-cn-beijing.aliyuncs.com/image/"+image;
+            image="https://love-api-1.oss-cn-beijing.aliyuncs.com/image/"+image;
 
             map.put("code",200);
             map.put("image",image);
