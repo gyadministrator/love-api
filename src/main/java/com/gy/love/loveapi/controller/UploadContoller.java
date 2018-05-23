@@ -3,9 +3,7 @@ package com.gy.love.loveapi.controller;
 import com.alibaba.fastjson.JSON;
 import com.gy.love.loveapi.utils.AliyunOSSUtil;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,15 +17,12 @@ public class UploadContoller {
     @ApiOperation(value = "图片上传")
     @PostMapping(value="/image",produces = {"application/json;charset=utf-8"})
     public String image(MultipartFile file, HttpServletRequest request){
-
         Map<String,Object> map=new HashMap<>();
         try {
-            //String path=request.getSession().getServletContext().getRealPath("\\upload\\");
-            //String image=FileUtil.uploadFile(file,path);
             AliyunOSSUtil aliyunOSSUtil=new AliyunOSSUtil();
             String image=aliyunOSSUtil.uploadFile(file,"image");
 
-            image="https://love-api.oss-cn-beijing.aliyuncs.com/"+image;
+            image="https://love-api.oss-cn-beijing.aliyuncs.com/image/"+image;
 
             map.put("code",200);
             map.put("image",image);
@@ -40,5 +35,4 @@ public class UploadContoller {
 
         return result;
     }
-
 }
