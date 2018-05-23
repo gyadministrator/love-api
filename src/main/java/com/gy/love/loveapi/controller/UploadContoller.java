@@ -19,8 +19,6 @@ public class UploadContoller {
     public String image(MultipartFile file, HttpServletRequest request){
         Map<String,Object> map=new HashMap<>();
         try {
-            //String path=request.getSession().getServletContext().getRealPath("\\upload\\");
-            //String image=FileUtil.uploadFile(file,path);
             AliyunOSSUtil aliyunOSSUtil=new AliyunOSSUtil();
             String image=aliyunOSSUtil.uploadFile(file,"image");
 
