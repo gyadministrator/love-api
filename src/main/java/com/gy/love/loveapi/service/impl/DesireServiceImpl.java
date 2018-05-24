@@ -29,9 +29,9 @@ public class DesireServiceImpl implements DesireService {
         PageHelper.startPage(page.getPage(), page.getPageSize());
 
         List<Map<String, Object>> list = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
         List<LoveDesire> all = loveDesireMapper.findAllByPage(page);
         for (int i = 0; i < all.size(); i++) {
+            Map<String, Object> map = new HashMap<>();
             LoveDesire loveDesire = all.get(i);
             Date endDate = loveDesire.getEndDate();
             try {
