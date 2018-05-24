@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.gy.love.loveapi.utils.response.HttpResponseAndStatus.simpleResponse;
 
 @RestController
@@ -28,35 +31,35 @@ public class DesireController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value ="添加愿望")
+    @ApiOperation(value = "添加愿望")
     @PostMapping
-    public SimpleResponse add(@RequestBody @Valid LoveDesire loveDesire, @CurrentUser LoveUser loveUser){
-        desireService.add(loveDesire,loveUser);
-         return simpleResponse(200);
-        }
+    public SimpleResponse add(@RequestBody @Valid LoveDesire loveDesire, @CurrentUser LoveUser loveUser) {
+        desireService.add(loveDesire, loveUser);
+        return simpleResponse(200);
+    }
 
     @ApiOperation(value = "查找愿望")
     @GetMapping("/{id}")
-    public SimpleResponse findById(@PathVariable("id") Integer id){
-        LoveDesire loveDesire=null;
+    public SimpleResponse findById(@PathVariable("id") Integer id) {
+        LoveDesire loveDesire = null;
         try {
-            loveDesire=desireService.findById(id);
-        }catch (Exception e){
+            loveDesire = desireService.findById(id);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return simpleResponse(200,"",loveDesire);
+        return simpleResponse(200, "", loveDesire);
     }
 
     @ApiOperation(value = "愿望分页")
     @GetMapping
-    public SimpleResponse findByPage(Page page){
-        PageInfo<LoveDesire> info=null;
+    public SimpleResponse findByPage(Page page) {
+        PageInfo<Map<String, Object>> info = null;
         try {
-            info=desireService.findAllByPage(page);
+            info = desireService.findAllByPage(page);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return simpleResponse(200,"",info);
+        return simpleResponse(200, "", info);
     }
 
 }
