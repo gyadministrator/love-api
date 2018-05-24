@@ -35,7 +35,7 @@ public class DesireServiceImpl implements DesireService {
             LoveDesire loveDesire = all.get(i);
             Date endDate = loveDesire.getEndDate();
             try {
-                int num = daysBetween(endDate, new Date());
+                int num = daysBetween(new Date(), endDate);
                 map.put("num", num);
             } catch (ParseException e) {
                 e.printStackTrace();
