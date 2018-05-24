@@ -25,9 +25,10 @@ public class DesireServiceImpl implements DesireService {
     }
 
     @Override
-    public PageInfo<Map<String,Object>> findAllByPage(Page page) {
+    public PageInfo<Map<String, Object>> findAllByPage(Page page) {
         PageHelper.startPage(page.getPage(), page.getPageSize());
 
+        List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         List<LoveDesire> all = loveDesireMapper.findAllByPage(page);
         for (int i = 0; i < all.size(); i++) {
@@ -40,9 +41,10 @@ public class DesireServiceImpl implements DesireService {
                 e.printStackTrace();
             }
             map.put("desire", loveDesire);
+            list.add(map);
         }
-        List<Map<String,Object>> list=new ArrayList<>();
-        PageInfo<Map<String,Object>> result = new PageInfo<>(list);
+
+        PageInfo<Map<String, Object>> result = new PageInfo<>(list);
         return result;
     }
 
