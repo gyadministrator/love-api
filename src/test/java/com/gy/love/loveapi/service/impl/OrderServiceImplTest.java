@@ -37,7 +37,7 @@ public class OrderServiceImplTest {
     @Test
     public void add() {
         LoveOrder loveOrder = new LoveOrder();
-        loveOrder.setId(1);
+        //loveOrder.setId(1);
         loveOrder.setAddress("ashdakjsd");
         loveOrder.setNumber(68);
         orderService.add(loveOrder);

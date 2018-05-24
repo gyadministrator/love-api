@@ -10,6 +10,15 @@ public class Page {
     private String keyword="";
     private int page=1;
     private int pageSize=10;
+    private int isNoticed;
+
+    public int getIsNoticed() {
+        return isNoticed;
+    }
+
+    public void setIsNoticed(int isNoticed) {
+        this.isNoticed = isNoticed;
+    }
 
     public String getColumn() {
         return column;

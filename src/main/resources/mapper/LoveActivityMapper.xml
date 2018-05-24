@@ -18,14 +18,14 @@
   <select id="findByDate" parameterType="map" resultType="LoveActivity">
     select <include refid="Activity_Base_Column_List"></include>
     from love_activity a
-    where a.target_id in
+    where a.date like concat(#{date},'%') and a.target_id in
     <foreach collection="users" item="user" index="index" open="(" close=")" separator=",">
       #{user.id}
     </foreach>
     UNION
     select <include refid="Activity_Base_Column_List"></include>
     from love_activity a ,love_user_activity ua
-    where date like concat(#{date},'%') and a.id=ua.activity_id and ua.user_id in
+    where a.date like concat(#{date},'%') and a.id=ua.activity_id and ua.user_id in
     <foreach collection="users" item="user" index="index" open="(" close=")" separator=",">
       #{user.id}
     </foreach>
@@ -33,7 +33,11 @@
   <select id="findAllByPage" parameterType="map" resultType="LoveActivity">
     select <include refid="Activity_Base_Column_List"></include>
     from love_activity a,love_user_activity ua
-    where a.${page.column} like concat('%',#{page.keyword},'%') and a.id=ua.activity_id and ua.user_id in
+    where a.${page.column} like concat('%',#{page.keyword},'%') and
+    <if test="page.isNoticed != null">
+      a.is_noticed=#{page.isNoticed}  and
+    </if>
+    a.id=ua.activity_id and ua.user_id in
     <foreach collection="users" item="user" index="index" open="(" close=")" separator=",">
       #{user.id}
     </foreach>
